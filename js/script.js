@@ -12,16 +12,23 @@ const colorOptions = colorSelect.children;
 const activitiesFieldset = document.querySelector('.activities');
 const activitiesInputs = document.querySelectorAll('.activities input');
 const activitiesCost = document.getElementById('activities-cost');
+
+// Payment Info
 const paymentSelect = document.getElementById('payment');
 const creditCardDiv = document.getElementById('credit-card');
+const creditCardInput = document.getElementById('cc-num');
+const zipInput = document.getElementById('zip');
+const cvvInput = document.getElementById('cvv');
+
+// Payment Select Options
 const paypalDiv = document.getElementById('paypal');
 const bitcoinDiv = document.getElementById('bitcoin');
 const form = document.querySelector('form');
 
-form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    console.log('Form Submitted');
-});
+// form.addEventListener('submit', (e) => {
+//     e.preventDefault();
+//     console.log('Form Submitted');
+// });
 
 // Focus on Name Input
 nameInput.focus();
@@ -91,6 +98,7 @@ activitiesFieldset.addEventListener('change', (e) => {
 // Payment Info
 
 // Hide Paypal and Bitcoin Info
+// creditCardDiv.style.display = 'none';
 paypalDiv.style.display = 'none';
 bitcoinDiv.style.display = 'none';
 
@@ -109,7 +117,7 @@ paymentSelect.addEventListener('change', (e) => {
         creditCardDiv.style.display = 'none';
         paypalDiv.style.display = 'none';
         bitcoinDiv.style.display = 'block';
-    }
+    } 
 });
 
 // Form Validation
@@ -181,32 +189,31 @@ form.addEventListener('submit', (e) => {
     } else {
         activitiesFieldset.style.borderColor = 'initial';
     }
-    if (paymentSelect.value === 'credit card') {
-        if (!creditCardValidation()) {
-            e.preventDefault();
-            creditCardInput.style.borderColor = 'red';
-        } else {
-            creditCardInput.style.borderColor = 'initial';
+    if (!creditCardValidation()) {
+        e.preventDefault();
+        creditCardInput.style.borderColor = 'red';
+    } else {
+        creditCardInput.style.borderColor = 'initial';
 
-        }
-        if (!zipValidation()) {
-            e.preventDefault();
-            zipInput.style.borderColor = 'red';
-        }
-        else {
-            zipInput.style.borderColor = 'initial';
-        }
-        if (!cvvValidation()) {
-            e.preventDefault();
-            cvvInput.style.borderColor = 'red';
-        }
-        else {
-            cvvInput.style.borderColor = 'initial';
-        }
     }
+    if (!zipValidation()) {
+        e.preventDefault();
+        zipInput.style.borderColor = 'red';
+    }
+    else {
+        zipInput.style.borderColor = 'initial';
+    }
+    if (!cvvValidation()) {
+        e.preventDefault();
+        cvvInput.style.borderColor = 'red';
+    }
+    else {
+        cvvInput.style.borderColor = 'initial';
+    }
+
 });
 
-// console.log user input to the console
+
 form.addEventListener('submit', (e) => {
     console.log(`Name: ${nameInput.value}`);
     console.log(`Email: ${emailInput.value}`);
