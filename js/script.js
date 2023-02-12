@@ -1,8 +1,9 @@
 // conesole.log('Hello World!');
 
+
 // Global Variables 
 const nameInput = document.getElementById('name');
-const emailInput = document.getElementById('mail');
+const emailInput = document.getElementById('email');
 const jobRoleSelect = document.getElementById('title');
 const otherJobRoleInput = document.getElementById('other-job-role');
 const designSelect = document.getElementById('design');
@@ -16,6 +17,11 @@ const creditCardDiv = document.getElementById('credit-card');
 const paypalDiv = document.getElementById('paypal');
 const bitcoinDiv = document.getElementById('bitcoin');
 const form = document.querySelector('form');
+
+form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    console.log('Form Submitted');
+});
 
 // Focus on Name Input
 nameInput.focus();
