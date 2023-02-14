@@ -98,26 +98,28 @@ activitiesFieldset.addEventListener('change', (e) => {
 // Payment Info
 
 // Hide Paypal and Bitcoin Info
-// creditCardDiv.style.display = 'none';
 paypalDiv.style.display = 'none';
 bitcoinDiv.style.display = 'none';
 
 
 // Show Payment Info
 paymentSelect.addEventListener('change', (e) => {
-    if (e.target.value === 'credit card') {
-        creditCardDiv.style.display = 'block';
-        paypalDiv.style.display = 'none';
-        bitcoinDiv.style.display = 'none';
-    } else if (e.target.value === 'paypal') {
+    if (e.target.value === 'paypal') {
         creditCardDiv.style.display = 'none';
         paypalDiv.style.display = 'block';
         bitcoinDiv.style.display = 'none';
+
     } else if (e.target.value === 'bitcoin') {
         creditCardDiv.style.display = 'none';
         paypalDiv.style.display = 'none';
         bitcoinDiv.style.display = 'block';
-    } 
+
+    } else if (e.target.value === 'credit card') {
+        creditCardDiv.style.display = 'block';
+        paypalDiv.style.display = 'none';
+        bitcoinDiv.style.display = 'none';
+    }
+
 });
 
 // Form Validation
@@ -139,10 +141,11 @@ function emailValidation() {
 
 // Activities Validation
 function activitiesValidation() {
-    let isChecked = false;
     for (let i = 0; i < activitiesInputs.length; i++) {
         if (activitiesInputs[i].checked) {
-            isChecked = true;
+            return isChecked = true;
+        } else {
+            return isChecked = false;
         }
     }
     return isChecked;
@@ -174,41 +177,49 @@ form.addEventListener('submit', (e) => {
     if (!nameValidation()) {
         e.preventDefault();
         nameInput.style.borderColor = 'red';
+        // alert('Please enter a valid name');
     } else {
         nameInput.style.borderColor = 'initial';
     }
     if (!emailValidation()) {
         e.preventDefault();
         emailInput.style.borderColor = 'red';
+        // alert('Please enter a valid email');
     } else {
         emailInput.style.borderColor = 'initial';
     }
     if (!activitiesValidation()) {
         e.preventDefault();
-        activitiesFieldset.style.borderColor = 'red';
+        activitiesFieldset.firstElementChild.style.borderColor = 'red';
+        // alert('Please select at least one activity');
     } else {
         activitiesFieldset.style.borderColor = 'initial';
     }
-    if (!creditCardValidation()) {
-        e.preventDefault();
-        creditCardInput.style.borderColor = 'red';
-    } else {
-        creditCardInput.style.borderColor = 'initial';
-
-    }
-    if (!zipValidation()) {
-        e.preventDefault();
-        zipInput.style.borderColor = 'red';
-    }
-    else {
-        zipInput.style.borderColor = 'initial';
-    }
-    if (!cvvValidation()) {
-        e.preventDefault();
-        cvvInput.style.borderColor = 'red';
-    }
-    else {
-        cvvInput.style.borderColor = 'initial';
+    if (paymentSelect.value === 'credit card') {
+        if (!creditCardValidation()) {
+            e.preventDefault();
+            creditCardInput.style.borderColor = 'red';
+            // alert('Please enter a valid credit card number');
+        } else {
+            creditCardInput.style.borderColor = 'initial';
+    
+        }
+        if (!zipValidation()) {
+            e.preventDefault();
+            zipInput.style.borderColor = 'red';
+            // alert('Please enter a valid zip code');
+        }
+        else {
+            zipInput.style.borderColor = 'initial';
+        }
+        if (!cvvValidation()) {
+            e.preventDefault();
+            cvvInput.style.borderColor = 'red';
+            // alert('Please enter a valid CVV');
+        }
+        else {
+            cvvInput.style.borderColor = 'initial';
+        }
     }
 
 });
