@@ -3,7 +3,9 @@
 
 // Global Variables 
 const nameInput = document.getElementById('name');
+const nameHint = document.getElementById('name-hint');
 const emailInput = document.getElementById('email');
+const emailHint = document.getElementById('email-hint');
 const jobRoleSelect = document.getElementById('title');
 const otherJobRoleInput = document.getElementById('other-job-role');
 const designSelect = document.getElementById('design');
@@ -12,13 +14,20 @@ const colorOptions = colorSelect.children;
 const activitiesFieldset = document.querySelector('.activities');
 const activitiesInputs = document.querySelectorAll('.activities input');
 const activitiesCost = document.getElementById('activities-cost');
+const activitiesHint = document.getElementById('activities-hint');
 
 // Payment Info
 const paymentSelect = document.getElementById('payment');
 const creditCardDiv = document.getElementById('credit-card');
 const creditCardInput = document.getElementById('cc-num');
+const creditCardHint = document.getElementById('cc-hint');
+const expMonthSelect = document.getElementById('exp-month');
+const expYearSelect = document.getElementById('exp-year');
 const zipInput = document.getElementById('zip');
+const zipHint = document.getElementById('zip-hint');
 const cvvInput = document.getElementById('cvv');
+const cvvHint = document.getElementById('cvv-hint');
+
 
 // Payment Select Options
 const paypalDiv = document.getElementById('paypal');
@@ -97,32 +106,29 @@ activitiesFieldset.addEventListener('change', (e) => {
 
 // Payment Info
 
-// Hide Paypal and Bitcoin Info
+// Hide Payment Info till selected
+creditCardDiv.style.display = 'none';
 paypalDiv.style.display = 'none';
 bitcoinDiv.style.display = 'none';
 
 
 // Show Payment Info
 paymentSelect.addEventListener('change', (e) => {
-    if (e.target.value === 'paypal') {
+    if (e.target.value === 'credit-card') {
+        creditCardDiv.style.display = 'block';
+        paypalDiv.style.display = 'none';
+        bitcoinDiv.style.display = 'none';
+    } else if (e.target.value === 'paypal') {
         creditCardDiv.style.display = 'none';
         paypalDiv.style.display = 'block';
         bitcoinDiv.style.display = 'none';
-
     } else if (e.target.value === 'bitcoin') {
         creditCardDiv.style.display = 'none';
         paypalDiv.style.display = 'none';
         bitcoinDiv.style.display = 'block';
-
-    } else if (e.target.value === 'credit card') {
-        creditCardDiv.style.display = 'block';
-        paypalDiv.style.display = 'none';
-        bitcoinDiv.style.display = 'none';
     }
-
 });
 
-// Form Validation
 
 // Name Validation
 function nameValidation() {
@@ -143,12 +149,9 @@ function emailValidation() {
 function activitiesValidation() {
     for (let i = 0; i < activitiesInputs.length; i++) {
         if (activitiesInputs[i].checked) {
-            return isChecked = true;
-        } else {
-            return isChecked = false;
+            return true;
         }
     }
-    return isChecked;
 }
 
 // Credit Card Validation
@@ -172,65 +175,86 @@ function cvvValidation() {
     return cvvIsValid;
 }
 
-// Form Validation
+//form validation
 form.addEventListener('submit', (e) => {
     if (!nameValidation()) {
         e.preventDefault();
-        nameInput.style.borderColor = 'red';
-        // alert('Please enter a valid name');
+        nameInput.parentElement.classList.add('not-valid');
+        nameInput.parentElement.classList.remove('valid');
+        nameHint.style.display = 'block';
     } else {
-        nameInput.style.borderColor = 'initial';
+        nameInput.parentElement.classList.add('valid');
+        nameInput.parentElement.classList.remove('not-valid');
+        nameHint.style.display = 'none';
+
     }
     if (!emailValidation()) {
         e.preventDefault();
-        emailInput.style.borderColor = 'red';
-        // alert('Please enter a valid email');
+        emailInput.parentElement.classList.add('not-valid');
+        emailInput.parentElement.classList.remove('valid');
+        emailHint.style.display = 'block';
+
     } else {
-        emailInput.style.borderColor = 'initial';
+        emailInput.parentElement.classList.add('valid');
+        emailInput.parentElement.classList.remove('not-valid');
+        emailHint.style.display = 'none';
     }
     if (!activitiesValidation()) {
         e.preventDefault();
-        activitiesFieldset.firstElementChild.style.borderColor = 'red';
-        // alert('Please select at least one activity');
+        activitiesFieldset.classList.add('not-valid');
+        activitiesFieldset.classList.remove('valid');
+        activitiesHint.style.display = 'block';
+
     } else {
-        activitiesFieldset.style.borderColor = 'initial';
+        activitiesFieldset.classList.add('valid');
+        activitiesFieldset.classList.remove('not-valid');
+        activitiesHint.style.display = 'none';
     }
-    if (paymentSelect.value === 'credit card') {
+
+    if (paymentSelect.value === 'credit-card') {
         if (!creditCardValidation()) {
             e.preventDefault();
-            creditCardInput.style.borderColor = 'red';
-            // alert('Please enter a valid credit card number');
+            creditCardInput.parentElement.classList.add('not-valid');
+            creditCardInput.parentElement.classList.remove('valid');
+            creditCardHint.style.display = 'block';
+
         } else {
-            creditCardInput.style.borderColor = 'initial';
-    
+            creditCardInput.parentElement.classList.add('valid');
+            creditCardInput.parentElement.classList.remove('not-valid');
+            creditCardHint.style.display = 'none';
         }
+        if (expMonthSelect.value === 'Select Date') {
+            e.preventDefault();
+            expMonthSelect.classList.add('not-valid');
+        } 
+
+        if (expYearSelect.value === 'Select Year') {
+            e.preventDefault();
+            expYearSelect.classList.add('not-valid');
+        }
+
         if (!zipValidation()) {
             e.preventDefault();
-            zipInput.style.borderColor = 'red';
-            // alert('Please enter a valid zip code');
-        }
-        else {
-            zipInput.style.borderColor = 'initial';
+            zipInput.parentElement.classList.add('not-valid');
+            zipInput.parentElement.classList.remove('valid');
+            zipHint.style.display = 'block';
+        } else {
+            zipInput.parentElement.classList.add('valid');
+            zipInput.parentElement.classList.remove('not-valid');
+            zipHint.style.display = 'none';
         }
         if (!cvvValidation()) {
             e.preventDefault();
-            cvvInput.style.borderColor = 'red';
-            // alert('Please enter a valid CVV');
-        }
-        else {
-            cvvInput.style.borderColor = 'initial';
+            cvvInput.parentElement.classList.add('not-valid');
+            cvvInput.parentElement.classList.remove('valid');
+            cvvHint.style.display = 'block';
+        } else {
+            cvvInput.parentElement.classList.add('valid');
+            cvvInput.parentElement.classList.remove('not-valid');
+            cvvHint.style.display = 'none';
         }
     }
-
 });
 
 
-form.addEventListener('submit', (e) => {
-    console.log(`Name: ${nameInput.value}`);
-    console.log(`Email: ${emailInput.value}`);
-    console.log(`Job Role: ${jobRoleSelect.value}`);
-    console.log(`T-Shirt Info: ${designSelect.value} ${colorSelect.value}`);
-    console.log(`Register for Activities: ${totalCost}`);
-    console.log(`Payment Info: ${paymentSelect.value}`);
-}
-);
+   
