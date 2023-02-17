@@ -226,11 +226,15 @@ form.addEventListener('submit', (e) => {
         if (expMonthSelect.value === 'Select Date') {
             e.preventDefault();
             expMonthSelect.classList.add('not-valid');
-        } 
+        } else {
+            expMonthSelect.classList.remove('not-valid');
+        }
 
         if (expYearSelect.value === 'Select Year') {
             e.preventDefault();
             expYearSelect.classList.add('not-valid');
+        } else {
+            expYearSelect.classList.remove('not-valid');
         }
 
         if (!zipValidation()) {
